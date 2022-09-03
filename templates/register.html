@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+<!-- {% load static %} -->
+{% block title %} 회원가입 {% endblock %}
+{% block content %}
+<div class="col text-center">
+    <h4>회원가입</h4>
+    <p class="text-success"><h5>{% if msg %} {{ msg }} {% endif %}</h5></p>
+</div>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+    <div class="col text-center">
+      <button type="submit" class="btn btn-primary btn-sm">가입하기</button>
+    </div>
+    </form>
+    <br/>
+
+{% endblock %}
