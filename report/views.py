@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-
 def index(request):
     user = Users.objects.filter(id=request.user.id).first()
     username = user.username if user else "Anonymous User!"
@@ -19,7 +18,6 @@ def index(request):
         username = "Anonymous User!"
     print(username)
     return render(request, "index.html", {"username": username})
-
 
 @csrf_exempt
 def get_user(request, user_id):
@@ -35,7 +33,6 @@ def get_user(request, user_id):
             user = Users.objects.filter(pk=user_id).update(username=username)
 
         return JsonResponse(dict(msg="You just reached with Post Method!"))
-
 
 def register(request):
     msg = "### django의 form을 활용한 입력폼입니다. 디자인이 예쁘지 않은 점 양해 바랍니다. ###"
@@ -57,23 +54,22 @@ def register(request):
         form = RegisterForm()
         return render(request, "register.html", {"form": form, "msg": msg})
 
-def login_view(request):
+# def login_view(request):
 
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
-        msg = "올바르지 않은 데이터 입니다."
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            msg = "회원가입완료"
-        return render(request, "register.html", {"form": form, "msg": msg})
-    else:
-        form = RegisterForm()
-        return render(request, "register.html", {"form": form})
-
+#     if request.method == "POST":
+#         form = RegisterForm(request.POST)
+#         msg = "올바르지 않은 데이터 입니다."
+#         if form.is_valid():
+#             form.save()
+#             username = form.cleaned_data.get("username")
+#             raw_password = form.cleaned_data.get("password1")
+#             user = authenticate(username=username, password=raw_password)
+#             login(request, user)
+#             msg = "회원가입완료"
+#         return render(request, "register.html", {"form": form, "msg": msg})
+#     else:
+#         form = RegisterForm()
+#         return render(request, "register.html", {"form": form})
 
 def login_view(request):
     is_ok = False
@@ -94,22 +90,14 @@ def login_view(request):
                     login(request, user)
                     is_ok = True
                     return redirect("index")
-
-                    # request.session["remember_me"] = remember_me
-
-                    # if not remember_me:
-                    #     request.session.set_expiry(0)
     else:
         msg = None
         form = LoginForm()
-    # print("REMEMBER_ME: ", request.session.get("remember_me"))
-    return render(request, "login.html", {"form": form, "msg": msg, "is_ok": is_ok})
-
+    return render(request, "login.html", {"form": form, "msg": msg, "is_ok": is_ok, "username": request.user.username})
 
 def logout_view(request):
     logout(request)
     return redirect("index")
-
 
 @login_required
 def list_view(request):
