@@ -20,18 +20,18 @@
     <!-- {% if is_ok or user.is_authenticated %}
     <p class="text-center text-sm text-success">로그인 성공({{ user.username }}) <a class="text-primary" href="{% url 'logout' %}">로그아웃</a></p>
     {% endif %} -->
-
+  <div class="col text-center">    
     <form method="post">
       {% csrf_token %}
 
     <div class="form-row">
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-6">
         <label>username</label>
         <p class="form-group">
           {{ form.username }}
         </p>
       </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-6">
         <label>password</label>
         <p class="form-group">
           {{ form.password }}
@@ -39,11 +39,11 @@
       </div>
     </div>
   </div>
-  <div class="text-right">
-    <div class="form-group col-md-5">
+  <!-- <div class="text-right"> -->
+    <div class="form-group col-md-12">
       <button type="submit" class="btn btn-primary my-1">로그인</button>
     </div>  
-  </div>
+  <!-- </div> -->
  </form>
  
 {% endblock %}
